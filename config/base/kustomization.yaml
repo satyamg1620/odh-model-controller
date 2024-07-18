@@ -14,6 +14,13 @@ generatorOptions:
 
 vars:
   - fieldref:
+      fieldPath:data.torchserve-image
+    name: torchserve-image
+    objref:
+      apiVersion: v1
+      kind: ConfigMap
+      name: odh-model-controller-parameters
+  - fieldref:
       fieldPath: data.caikit-tgis-image
     name: caikit-tgis-image
     objref:

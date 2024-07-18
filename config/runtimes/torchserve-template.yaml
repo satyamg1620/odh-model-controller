@@ -1,0 +1,41 @@
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: kserve-torchserve
+  labels:
+    opendatahub.io/dashboard: 'true'
+    opendatahub.io/ootb: 'true'
+  annotations:
+    tags: 'kserve-torchserve,servingruntime'
+    description: 'TorchServe Model Serving Definition'
+    opendatahub.io/modelServingSupport: '["single"]'
+    opendatahub.io/apiProtocol: 'REST'
+objects:
+  - apiVersion: serving.kserve.io/v1alpha1
+    kind: ServingRuntime
+    metadata:
+      annotations:
+        openshift.io/display-name: TorchServe Model Server
+      name: kserve-torchserve
+      labels:
+        opendatahub.io/dashboard: 'true'
+    spec:
+      multiModel: false
+      annotations:
+        prometheus.io/port: '8082'
+        prometheus.io/path: /metrics
+      supportedModelFormats:
+        - name: pytorch
+          version: '1'
+          priority: 2
+          autoSelect: true
+      protocolVersions:
+        - v1
+        - v2
+        - grpc-v2
+      containers:
+        - name: kserve-container
+          image: $(torchserve-image)
+          env:
+            - name: TEMP
+              value: /tmp

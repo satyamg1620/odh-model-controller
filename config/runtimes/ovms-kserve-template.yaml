@@ -40,9 +40,6 @@ objects:
         - name: paddle
           version: '2'
           autoSelect: true
-        - name: pytorch
-          version: '2'
-          autoSelect: true
       protocolVersions:
         - v2
         - grpc-v2
